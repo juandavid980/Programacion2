@@ -8,7 +8,7 @@ class MiPunto:
         self.__y=0
     
     @multimethod
-    def __init__(self, x:int,y:int):
+    def __init__(self, x:float,y:float):
         self.__x=x
         self.__y=y
 
@@ -27,7 +27,7 @@ class MiPunto:
         return math.sqrt((x-self.__x)**2+(y-self.__y)**2)
 
 p1=MiPunto()
-p2=MiPunto(4,5)
+p2=MiPunto(10.0,30.5)
 
 print("distancia de p1 a p2", p1.distancia(p2))
 print("distancia de p1 a 5,6", p1.distancia(5.0,6.0))
