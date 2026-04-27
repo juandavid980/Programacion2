@@ -1,3 +1,5 @@
+
+from abc import ABC, abstractmethod
 import random
 class Juego:
     def __init__(self,numeroDeVidas,record):
@@ -6,11 +8,14 @@ class Juego:
 
     def reiniciaPartida(self):
         self.vidasActuales=self.numeroDeVidas
-
+    @abstractmethod
+    def mostrarReglas(self):
+        print("tenes que adi")
     def actualizaRecord(self):
         if self.vidasActuales > self.record:
             self.record = self.vidasActuales
             print("nuevo record:", self.record)
+
     def quitaVida(self):
         self.vidasActuales-=1
         print("te quedan", self.vidasActuales, " vidas ")
@@ -19,13 +24,32 @@ class Juego:
         else:
             print("game over")
             return False
-class JuegoAdivinaNumero(Juego):
+        
+class Jugable(ABC):
+
+    @abstractmethod
+    def saludarJugador(self):
+        pass
+
+    @abstractmethod
+    def despedirJugador(self):
+        pass    
+
+
+class JuegoAdivinaNumero(Juego,Jugable):
     def __init__(self, numeroDeVidas):
         super().__init__(numeroDeVidas,0)
         self.numeroAAdivinar=numeroDeVidas
         self.record=0
     def validaNumero(self, n):
         return 0 <= n <= 10
+    
+    def saludarJugador(self):
+        print("hola ")
+
+    def despedirJugador(self):
+        print("chau")
+
     def juega (self):
         self.reiniciaPartida()
         self.numeroAAdivinar = random.randint(0,10)
@@ -48,7 +72,8 @@ class JuegoAdivinaNumero(Juego):
                 else:
                     print("el numero a advinar era",self.numeroAAdivinar)
                     break
-
+    def mostrarReglas(self):
+        print("Adivina un número entre 0 y 10")
 class JuegoAdivinaPar(JuegoAdivinaNumero):
     def validaNumero(self, n):
         if 0 <= n <= 10:
@@ -58,6 +83,15 @@ class JuegoAdivinaPar(JuegoAdivinaNumero):
                 print("el número debe ser par")
                 return False
         return False
+    def mostrarReglas(self):
+        print("Adivina un número PAR entre 0 y 10")
+    
+
+    def saludarJugador(self):
+        print("hola ")
+
+    def despedirJugador(self):
+        print("chau")
     
 class JuegoAdivinaImpar(JuegoAdivinaNumero):
     def validaNumero(self, n):
@@ -68,6 +102,16 @@ class JuegoAdivinaImpar(JuegoAdivinaNumero):
                 print("el número debe ser  impar")
                 return False
         return False
+    def mostrarReglas(self):
+        print("Adivina un número IMPAR entre 0 y 10")
+    
+    def saludarJugador(self):
+        print("hola ")
+
+    def despedirJugador(self):
+        print("chau")
+
+
 if __name__ == "__main__":
     juego1 = JuegoAdivinaNumero(3)
     juego2 = JuegoAdivinaPar(3)
@@ -76,4 +120,3 @@ if __name__ == "__main__":
     juego1.juega()
     juego2.juega()
     juego3.juega()
-
